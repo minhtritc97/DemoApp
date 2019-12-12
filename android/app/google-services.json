@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "136474628215",
+    "firebase_url": "https://reactnativeproblem1.firebaseio.com",
+    "project_id": "reactnativeproblem1",
+    "storage_bucket": "reactnativeproblem1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:136474628215:android:5d63f177c96b9b803b3672",
+        "android_client_info": {
+          "package_name": "com.example.carousel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "136474628215-en2h44r8ki62phqpvdr8vg2eauh487of.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1N5uwY7_Yqzj2MfAnaiOEvmLgxo3rQ6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "136474628215-en2h44r8ki62phqpvdr8vg2eauh487of.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:136474628215:android:a64011cfef5453cf3b3672",
+        "android_client_info": {
+          "package_name": "com.example.demo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "136474628215-en2h44r8ki62phqpvdr8vg2eauh487of.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1N5uwY7_Yqzj2MfAnaiOEvmLgxo3rQ6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "136474628215-en2h44r8ki62phqpvdr8vg2eauh487of.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:136474628215:android:483051a45ac13a8a3b3672",
+        "android_client_info": {
+          "package_name": "com.example.problem1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "136474628215-en2h44r8ki62phqpvdr8vg2eauh487of.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1N5uwY7_Yqzj2MfAnaiOEvmLgxo3rQ6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "136474628215-en2h44r8ki62phqpvdr8vg2eauh487of.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
