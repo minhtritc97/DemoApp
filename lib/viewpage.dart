@@ -18,11 +18,7 @@ class ViewPage extends StatefulWidget {
 class ViewPageState extends State<ViewPage> {
   Future<User> user;
   bool isConnect = false;
-  bool isPerson = true;
-  bool isNote = false;
-  bool isPlace = false;
-  bool isPhone = false;
-  bool isLock = false;
+  String activedButton = "Person";
   DatabaseService dbService = new DatabaseService();
 
   @override
@@ -84,15 +80,11 @@ class ViewPageState extends State<ViewPage> {
               onPressed: () {
                 setState(() {
                   //isChecked ? true : false;
-                  isPerson = true;
-                  isNote = false;
-                  isPlace = false;
-                  isPhone = false;
-                  isLock = false;
+                 activedButton = "Person";
                 });
               },
               iconSize: 32.0,
-              color: isPerson ? Colors.green : Colors.grey,
+              color: activedButton == "Person" ? Colors.green : Colors.grey,
             ),
           )
         ],
@@ -108,15 +100,11 @@ class ViewPageState extends State<ViewPage> {
               icon: Icon(icon),
               onPressed: () {
                 setState(() {
-                  isPerson = false;
-                  isNote = true;
-                  isPlace = false;
-                  isPhone = false;
-                  isLock = false;
+                  activedButton = "Note";
                 });
               },
               iconSize: 32.0,
-              color: isNote ? Colors.green : Colors.grey,
+              color:  activedButton == "Note" ? Colors.green : Colors.grey,
             ),
           )
         ],
@@ -133,15 +121,11 @@ class ViewPageState extends State<ViewPage> {
               onPressed: () {
                 setState(() {
                   //isChecked ? true : false;
-                  isPerson = false;
-                  isNote = false;
-                  isPlace = true;
-                  isPhone = false;
-                  isLock = false;
+                  activedButton = "Place";
                 });
               },
               iconSize: 32.0,
-              color: isPlace ? Colors.green : Colors.grey,
+              color:  activedButton == "Place" ? Colors.green : Colors.grey,
             ),
           )
         ],
@@ -157,15 +141,11 @@ class ViewPageState extends State<ViewPage> {
               icon: Icon(icon),
               onPressed: () {
                 setState(() {
-                  isPerson = false;
-                  isNote = false;
-                  isPlace = false;
-                  isPhone = true;
-                  isLock = false;
+                  activedButton = "Phone";
                 });
               },
               iconSize: 32.0,
-              color: isPhone ? Colors.green : Colors.grey,
+              color:  activedButton == "Phone" ? Colors.green : Colors.grey,
             ),
           )
         ],
@@ -181,15 +161,11 @@ class ViewPageState extends State<ViewPage> {
               icon: Icon(icon),
               onPressed: () {
                 setState(() {
-                  isPerson = false;
-                  isNote = false;
-                  isPlace = false;
-                  isPhone = false;
-                  isLock = true;
+                  activedButton = "Lock";
                 });
               },
               iconSize: 32.0,
-              color: isLock ? Colors.green : Colors.grey,
+              color:  activedButton == "Lock" ? Colors.green : Colors.grey,
             ),
           )
         ],
@@ -210,8 +186,6 @@ class ViewPageState extends State<ViewPage> {
     );
 
     // TODO: implement build
-    final screenSize = MediaQuery.of(context).size;
-
 
     return new Scaffold(
       appBar: new AppBar(
@@ -251,11 +225,7 @@ class ViewPageState extends State<ViewPage> {
                           if (dr == DismissDirection.endToStart) {
                             //next page
                             setState(() {
-                              isPerson = true;
-                              isNote = false;
-                              isPlace = false;
-                              isPhone = false;
-                              isLock = false;
+                              activedButton = "Person";
                               user = fetchPost();
                               isConnect=false;
                             });
@@ -263,11 +233,7 @@ class ViewPageState extends State<ViewPage> {
                           if (dr == DismissDirection.startToEnd) {
                               dbService.writeDB(snapshot.data);
                             setState(() {
-                              isPerson = true;
-                              isNote = false;
-                              isPlace = false;
-                              isPhone = false;
-                              isLock = false;
+                              activedButton = "Person";
                             });
 
                             Scaffold.of(context).showSnackBar(
@@ -331,15 +297,15 @@ class ViewPageState extends State<ViewPage> {
                                             new Container(
                                               child: new ListTile(
                                                 title: new Text(
-                                                  isPerson
+                                                  activedButton == "Person"
                                                       ? 'My name is'
-                                                      : (isPlace
+                                                      : ( activedButton == "Place"
                                                           ? 'I am from'
-                                                          : (isNote
+                                                          : ( activedButton == "Note"
                                                               ? 'My email is'
-                                                              : (isPhone
+                                                              : ( activedButton == "Phone"
                                                                   ? 'My phone is'
-                                                                  : (isLock
+                                                                  : ( activedButton == "Lock"
                                                                       ? ''
                                                                       : '')))),
                                                   textAlign: TextAlign.center,
@@ -348,7 +314,7 @@ class ViewPageState extends State<ViewPage> {
                                                           FontWeight.w300),
                                                 ),
                                                 subtitle: new Text(
-                                                  isPerson
+                                                  activedButton == "Person"
                                                       ? snapshot.data.first[0]
                                                               .toUpperCase() +
                                                           snapshot.data.first
@@ -358,20 +324,20 @@ class ViewPageState extends State<ViewPage> {
                                                               .toUpperCase() +
                                                           snapshot.data.last
                                                               .substring(1)
-                                                      : (isPlace
+                                                      : ( activedButton == "Place"
                                                           ? snapshot
                                                                   .data.city[0]
                                                                   .toUpperCase() +
                                                               snapshot.data.city
                                                                   .substring(1)
-                                                          : (isNote
+                                                          : ( activedButton == "Note"
                                                               ? snapshot
                                                                   .data.email
-                                                              : (isPhone
+                                                              : ( activedButton == "Phone"
                                                                   ? snapshot
                                                                       .data
                                                                       .phone
-                                                                  : (isLock
+                                                                  : ( activedButton == "Lock"
                                                                       ? snapshot
                                                                           .data
                                                                           .username
