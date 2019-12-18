@@ -1,4 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:demo_app/src/widgets/custom_button.dart';
+import 'package:demo_app/src/widgets/doc_user_picture.dart';
+import 'package:demo_app/src/widgets/document_infor_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -15,120 +18,52 @@ class FavouriteListState extends State<FavouriteList> {
 
   String activeButton = "Person";
 
-  
+
   @override
   Widget build(BuildContext context) {
-    Widget buildButton1(IconData icon) {
-      return new Column(
-        children: <Widget>[
-          new Container(
-            padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0),
-            child: new IconButton(
-              icon: Icon(icon),
-              onPressed: () {
-                setState(() {
-                  //isChecked ? true : false;
-                  activeButton = "Person";
-                });
-              },
-              iconSize: 32.0,
-              color:  activeButton == "Person" ? Colors.green : Colors.grey,
-            ),
-          )
-        ],
-      );
+
+    _onPressPerson(){
+      setState(() {
+        //isChecked ? true : false;
+        activeButton = "Person";
+      });
+    }
+    _onPressNote(){
+      setState(() {
+        //isChecked ? true : false;
+        activeButton = "Note";
+      });
+    }
+    _onPressPlace(){
+      setState(() {
+        //isChecked ? true : false;
+        activeButton = "Place";
+      });
+    }
+    _onPressPhone(){
+      setState(() {
+        //isChecked ? true : false;
+        activeButton = "Phone";
+      });
+    }
+    _onPressLock(){
+      setState(() {
+        //isChecked ? true : false;
+        activeButton = "Lock";
+      });
     }
 
-    Widget buildButton2(IconData icon) {
-      return new Column(
-        children: <Widget>[
-          new Container(
-            padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0),
-            child: new IconButton(
-              icon: Icon(icon),
-              onPressed: () {
-                setState(() {
-                  activeButton = "Note";
-                });
-              },
-              iconSize: 32.0,
-              color:  activeButton == "Note" ? Colors.green : Colors.grey,
-            ),
-          )
-        ],
-      );
-    }
 
-    Widget buildButton3(IconData icon) {
-      return new Column(
-        children: <Widget>[
-          new Container(
-            padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0),
-            child: new IconButton(
-              icon: Icon(icon),
-              onPressed: () {
-                setState(() {
-                  //isChecked ? true : false;
-                  activeButton = "Place";
-                });
-              },
-              iconSize: 32.0,
-              color:  activeButton == "Place" ? Colors.green : Colors.grey,
-            ),
-          )
-        ],
-      );
-    }
-
-    Widget buildButton4(IconData icon) {
-      return new Column(
-        children: <Widget>[
-          new Container(
-            padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0),
-            child: new IconButton(
-              icon: Icon(icon),
-              onPressed: () {
-                setState(() {
-                  activeButton = "Phone";
-                });
-              },
-              iconSize: 32.0,
-              color:  activeButton == "Phone" ? Colors.green : Colors.grey,
-            ),
-          )
-        ],
-      );
-    }
-
-    Widget buildButton5(IconData icon) {
-      return new Column(
-        children: <Widget>[
-          new Container(
-            padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0),
-            child: new IconButton(
-              icon: Icon(icon),
-              onPressed: () {
-                setState(() {
-                  activeButton = "Lock";
-                });
-              },
-              iconSize: 32.0,
-              color:  activeButton == "Lock" ? Colors.green : Colors.grey,
-            ),
-          )
-        ],
-      );
-    }
 
     Widget fiveButtonSection = new Container(
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          buildButton1(Icons.person),
-          buildButton2(Icons.event_note),
-          buildButton3(Icons.map),
-          buildButton4(Icons.phone),
-          buildButton5(Icons.lock)
+          CustomButton(_onPressPerson,Icons.person,activeButton,"Person"),
+          CustomButton(_onPressNote,Icons.event_note,activeButton,"Note"),
+          CustomButton(_onPressPlace,Icons.map,activeButton,"Place"),
+          CustomButton(_onPressPhone,Icons.phone,activeButton,"Phone"),
+          CustomButton(_onPressLock,Icons.lock,activeButton,"Lock")
         ],
       ),
     );
@@ -176,57 +111,7 @@ class FavouriteListState extends State<FavouriteList> {
                                           child: new Column(
                                             children: <Widget>[
                                               new Container(
-                                                child: new ListTile(
-                                                  title: new Text(
-                                                    activeButton == "Person"
-                                                        ? 'My name is'
-                                                        : (activeButton == "Place"
-                                                            ? 'I am from'
-                                                            : (activeButton == "Note"
-                                                                ? 'My email is'
-                                                                : (activeButton == "Phone"
-                                                                    ? 'My phone is'
-                                                                    : (activeButton == "Lock"
-                                                                        ? ''
-                                                                        : '')))),
-                                                    textAlign: TextAlign.center,
-                                                    style: new TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w300),
-                                                  ),
-                                                  subtitle: new Text(
-                                                    activeButton == "Person"
-                                                        ? document['first'][0]
-                                                        .toUpperCase() +
-                                                        document['first']
-                                                            .substring(1) +
-                                                        ' ' +
-                                                        document['last'][0]
-                                                            .toUpperCase() +
-                                                        document['last']
-                                                            .substring(1)
-                                                        : (activeButton == "Place"
-                                                            ? document['city'][0]
-                                                        .toUpperCase() +
-                                                        document['city']
-                                                            .substring(1)
-                                                            : (activeButton == "Note"
-                                                                ? document[
-                                                                    'email']
-                                                                : (activeButton == "Phone"
-                                                                    ? document[
-                                                                        'phone']
-                                                                    : (activeButton == "Lock"
-                                                                        ? document['username']
-
-                                                                        : "")))),
-                                                    textAlign: TextAlign.center,
-                                                    style: new TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontSize: 20.0),
-                                                  ),
-                                                ),
+                                                child: new DocInforListTile(activeButton, document),
                                                 padding: new EdgeInsets.only(
                                                     top: 60.0),
                                               ),
@@ -236,21 +121,7 @@ class FavouriteListState extends State<FavouriteList> {
                                         ),
                                       ),
                                     ),
-                                    new Container(
-                                      padding:
-                                          new EdgeInsets.only(bottom: 300.0),
-                                      child: new ClipOval(
-                                          child: new CachedNetworkImage(
-                                        width: 150.0,
-                                        height: 150.0,
-                                        imageUrl: document['picture'],
-                                        fit: BoxFit.fill,
-                                        placeholder: (context, url) =>
-                                            CircularProgressIndicator(),
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
-                                      )),
-                                    ),
+                                    new DocUserPicture(document),
                                   ],
                                 ),
                               ),
