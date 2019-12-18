@@ -13,13 +13,9 @@ class FavouriteList extends StatefulWidget {
 
 class FavouriteListState extends State<FavouriteList> {
 
-  bool isPerson = true;
-  bool isNote = false;
-  bool isPlace = false;
-  bool isPhone = false;
-  bool isLock = false;
+  String activeButton = "Person";
 
-
+  
   @override
   Widget build(BuildContext context) {
     Widget buildButton1(IconData icon) {
@@ -32,15 +28,11 @@ class FavouriteListState extends State<FavouriteList> {
               onPressed: () {
                 setState(() {
                   //isChecked ? true : false;
-                  isPerson = true;
-                  isNote = false;
-                  isPlace = false;
-                  isPhone = false;
-                  isLock = false;
+                  activeButton = "Person";
                 });
               },
               iconSize: 32.0,
-              color: isPerson ? Colors.green : Colors.grey,
+              color:  activeButton == "Person" ? Colors.green : Colors.grey,
             ),
           )
         ],
@@ -56,15 +48,11 @@ class FavouriteListState extends State<FavouriteList> {
               icon: Icon(icon),
               onPressed: () {
                 setState(() {
-                  isPerson = false;
-                  isNote = true;
-                  isPlace = false;
-                  isPhone = false;
-                  isLock = false;
+                  activeButton = "Note";
                 });
               },
               iconSize: 32.0,
-              color: isNote ? Colors.green : Colors.grey,
+              color:  activeButton == "Note" ? Colors.green : Colors.grey,
             ),
           )
         ],
@@ -81,15 +69,11 @@ class FavouriteListState extends State<FavouriteList> {
               onPressed: () {
                 setState(() {
                   //isChecked ? true : false;
-                  isPerson = false;
-                  isNote = false;
-                  isPlace = true;
-                  isPhone = false;
-                  isLock = false;
+                  activeButton = "Place";
                 });
               },
               iconSize: 32.0,
-              color: isPlace ? Colors.green : Colors.grey,
+              color:  activeButton == "Place" ? Colors.green : Colors.grey,
             ),
           )
         ],
@@ -105,15 +89,11 @@ class FavouriteListState extends State<FavouriteList> {
               icon: Icon(icon),
               onPressed: () {
                 setState(() {
-                  isPerson = false;
-                  isNote = false;
-                  isPlace = false;
-                  isPhone = true;
-                  isLock = false;
+                  activeButton = "Phone";
                 });
               },
               iconSize: 32.0,
-              color: isPhone ? Colors.green : Colors.grey,
+              color:  activeButton == "Phone" ? Colors.green : Colors.grey,
             ),
           )
         ],
@@ -129,22 +109,18 @@ class FavouriteListState extends State<FavouriteList> {
               icon: Icon(icon),
               onPressed: () {
                 setState(() {
-                  isPerson = false;
-                  isNote = false;
-                  isPlace = false;
-                  isPhone = false;
-                  isLock = true;
+                  activeButton = "Lock";
                 });
               },
               iconSize: 32.0,
-              color: isLock ? Colors.green : Colors.grey,
+              color:  activeButton == "Lock" ? Colors.green : Colors.grey,
             ),
           )
         ],
       );
     }
 
-    Widget fourButtonSection = new Container(
+    Widget fiveButtonSection = new Container(
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -158,13 +134,13 @@ class FavouriteListState extends State<FavouriteList> {
     );
 
 
-
     // TODO: implement build
     return Scaffold(
         body: new Container(
             child: new FutureBuilder<QuerySnapshot>(
                 future:
                     Firestore.instance.collection('favourite').getDocuments(),
+
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return Center(
@@ -178,6 +154,7 @@ class FavouriteListState extends State<FavouriteList> {
                     // return: show error widget
                   }
                   return new PageView(
+
                     scrollDirection: Axis.horizontal,
                     children: snapshot.data.documents
                         .map((DocumentSnapshot document) {
@@ -201,15 +178,15 @@ class FavouriteListState extends State<FavouriteList> {
                                               new Container(
                                                 child: new ListTile(
                                                   title: new Text(
-                                                    isPerson
+                                                    activeButton == "Person"
                                                         ? 'My name is'
-                                                        : (isPlace
+                                                        : (activeButton == "Place"
                                                             ? 'I am from'
-                                                            : (isNote
+                                                            : (activeButton == "Note"
                                                                 ? 'My email is'
-                                                                : (isPhone
+                                                                : (activeButton == "Phone"
                                                                     ? 'My phone is'
-                                                                    : (isLock
+                                                                    : (activeButton == "Lock"
                                                                         ? ''
                                                                         : '')))),
                                                     textAlign: TextAlign.center,
@@ -218,7 +195,7 @@ class FavouriteListState extends State<FavouriteList> {
                                                             FontWeight.w300),
                                                   ),
                                                   subtitle: new Text(
-                                                    isPerson
+                                                    activeButton == "Person"
                                                         ? document['first'][0]
                                                         .toUpperCase() +
                                                         document['first']
@@ -228,18 +205,18 @@ class FavouriteListState extends State<FavouriteList> {
                                                             .toUpperCase() +
                                                         document['last']
                                                             .substring(1)
-                                                        : (isPlace
+                                                        : (activeButton == "Place"
                                                             ? document['city'][0]
                                                         .toUpperCase() +
                                                         document['city']
                                                             .substring(1)
-                                                            : (isNote
+                                                            : (activeButton == "Note"
                                                                 ? document[
                                                                     'email']
-                                                                : (isPhone
+                                                                : (activeButton == "Phone"
                                                                     ? document[
                                                                         'phone']
-                                                                    : (isLock
+                                                                    : (activeButton == "Lock"
                                                                         ? document['username']
 
                                                                         : "")))),
@@ -253,7 +230,7 @@ class FavouriteListState extends State<FavouriteList> {
                                                 padding: new EdgeInsets.only(
                                                     top: 60.0),
                                               ),
-                                              fourButtonSection
+                                              fiveButtonSection
                                             ],
                                           ),
                                         ),

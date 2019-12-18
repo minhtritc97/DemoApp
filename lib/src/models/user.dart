@@ -21,6 +21,7 @@ class User {
   String SSN;
   String picture;
 
+
   User({
       this.gender,
       this.title,
@@ -96,3 +97,4 @@ class User {
       };
 
 }
+

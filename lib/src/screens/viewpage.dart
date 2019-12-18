@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'user.dart';
+import '../models/user.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'database.dart';
+import '../models/database.dart';
 import 'favouritelist.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,7 +18,7 @@ class ViewPage extends StatefulWidget {
 class ViewPageState extends State<ViewPage> {
   Future<User> user;
   bool isConnect = false;
-  String activedButton = "Person";
+  String activeButton = "Person";
   DatabaseService dbService = new DatabaseService();
 
   @override
@@ -36,14 +36,14 @@ class ViewPageState extends State<ViewPage> {
     super.didUpdateWidget(oldWidget);
   }
 
-  Future<User> fetchPost() async {
+   Future<User> fetchPost() async {
     final response = await http.get('https://randomuser.me/api/0.4/?randomapi');
     setState(() {
       isConnect=true;
     });
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON.
-      return User.fromJson(json.decode(response.body));
+      return  User.fromJson(json.decode(response.body));
     } else {
       // If that call was not successful, throw an error.
       throw Exception('Failed to load post');
@@ -80,11 +80,11 @@ class ViewPageState extends State<ViewPage> {
               onPressed: () {
                 setState(() {
                   //isChecked ? true : false;
-                 activedButton = "Person";
+                  activeButton = "Person";
                 });
               },
               iconSize: 32.0,
-              color: activedButton == "Person" ? Colors.green : Colors.grey,
+              color: activeButton == "Person" ? Colors.green : Colors.grey,
             ),
           )
         ],
@@ -100,11 +100,11 @@ class ViewPageState extends State<ViewPage> {
               icon: Icon(icon),
               onPressed: () {
                 setState(() {
-                  activedButton = "Note";
+                  activeButton = "Note";
                 });
               },
               iconSize: 32.0,
-              color:  activedButton == "Note" ? Colors.green : Colors.grey,
+              color:  activeButton == "Note" ? Colors.green : Colors.grey,
             ),
           )
         ],
@@ -121,11 +121,11 @@ class ViewPageState extends State<ViewPage> {
               onPressed: () {
                 setState(() {
                   //isChecked ? true : false;
-                  activedButton = "Place";
+                  activeButton = "Place";
                 });
               },
               iconSize: 32.0,
-              color:  activedButton == "Place" ? Colors.green : Colors.grey,
+              color:  activeButton == "Place" ? Colors.green : Colors.grey,
             ),
           )
         ],
@@ -141,11 +141,11 @@ class ViewPageState extends State<ViewPage> {
               icon: Icon(icon),
               onPressed: () {
                 setState(() {
-                  activedButton = "Phone";
+                  activeButton = "Phone";
                 });
               },
               iconSize: 32.0,
-              color:  activedButton == "Phone" ? Colors.green : Colors.grey,
+              color:  activeButton == "Phone" ? Colors.green : Colors.grey,
             ),
           )
         ],
@@ -161,18 +161,18 @@ class ViewPageState extends State<ViewPage> {
               icon: Icon(icon),
               onPressed: () {
                 setState(() {
-                  activedButton = "Lock";
+                  activeButton = "Lock";
                 });
               },
               iconSize: 32.0,
-              color:  activedButton == "Lock" ? Colors.green : Colors.grey,
+              color:  activeButton == "Lock" ? Colors.green : Colors.grey,
             ),
           )
         ],
       );
     }
 
-    Widget fourButtonSection = new Container(
+    Widget fiveButtonSection = new Container(
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -186,7 +186,6 @@ class ViewPageState extends State<ViewPage> {
     );
 
     // TODO: implement build
-
     return new Scaffold(
       appBar: new AppBar(
         title: Center(
@@ -195,7 +194,7 @@ class ViewPageState extends State<ViewPage> {
         actions: <Widget>[
           new IconButton(
               icon: Icon(Icons.playlist_add_check),
-              onPressed: () => Navigator.push(context,
+              onPressed: () =>  Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Favourite())))
         ],
       ),
@@ -225,7 +224,7 @@ class ViewPageState extends State<ViewPage> {
                           if (dr == DismissDirection.endToStart) {
                             //next page
                             setState(() {
-                              activedButton = "Person";
+                              activeButton = "Person";
                               user = fetchPost();
                               isConnect=false;
                             });
@@ -233,7 +232,7 @@ class ViewPageState extends State<ViewPage> {
                           if (dr == DismissDirection.startToEnd) {
                               dbService.writeDB(snapshot.data);
                             setState(() {
-                              activedButton = "Person";
+                              activeButton = "Person";
                             });
 
                             Scaffold.of(context).showSnackBar(
@@ -297,15 +296,15 @@ class ViewPageState extends State<ViewPage> {
                                             new Container(
                                               child: new ListTile(
                                                 title: new Text(
-                                                  activedButton == "Person"
+                                                  activeButton == "Person"
                                                       ? 'My name is'
-                                                      : ( activedButton == "Place"
+                                                      : ( activeButton == "Place"
                                                           ? 'I am from'
-                                                          : ( activedButton == "Note"
+                                                          : ( activeButton == "Note"
                                                               ? 'My email is'
-                                                              : ( activedButton == "Phone"
+                                                              : ( activeButton == "Phone"
                                                                   ? 'My phone is'
-                                                                  : ( activedButton == "Lock"
+                                                                  : ( activeButton == "Lock"
                                                                       ? ''
                                                                       : '')))),
                                                   textAlign: TextAlign.center,
@@ -314,7 +313,7 @@ class ViewPageState extends State<ViewPage> {
                                                           FontWeight.w300),
                                                 ),
                                                 subtitle: new Text(
-                                                  activedButton == "Person"
+                                                  activeButton == "Person"
                                                       ? snapshot.data.first[0]
                                                               .toUpperCase() +
                                                           snapshot.data.first
@@ -324,20 +323,20 @@ class ViewPageState extends State<ViewPage> {
                                                               .toUpperCase() +
                                                           snapshot.data.last
                                                               .substring(1)
-                                                      : ( activedButton == "Place"
+                                                      : ( activeButton == "Place"
                                                           ? snapshot
                                                                   .data.city[0]
                                                                   .toUpperCase() +
                                                               snapshot.data.city
                                                                   .substring(1)
-                                                          : ( activedButton == "Note"
+                                                          : ( activeButton == "Note"
                                                               ? snapshot
                                                                   .data.email
-                                                              : ( activedButton == "Phone"
+                                                              : ( activeButton == "Phone"
                                                                   ? snapshot
                                                                       .data
                                                                       .phone
-                                                                  : ( activedButton == "Lock"
+                                                                  : ( activeButton == "Lock"
                                                                       ? snapshot
                                                                           .data
                                                                           .username
@@ -352,7 +351,7 @@ class ViewPageState extends State<ViewPage> {
                                               padding: new EdgeInsets.only(
                                                   top: 60.0),
                                             ),
-                                            fourButtonSection
+                                            fiveButtonSection
                                           ],
                                         ),
                                       ),
